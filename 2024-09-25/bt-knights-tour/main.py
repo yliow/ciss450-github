@@ -3,10 +3,9 @@ def pprint(n, s):
         return n * '+-' + '+'
     print(line(n))
     for row in s:
-        print('|' + ('|'.join(row)) + '|')
+        print('|' + ('|'.join([str(_) for _ in row])) + '|')
         print(line(n))
         
-    
 def bt_kt(n, s, r=None, c=None):
     pprint(n, s)
     if r == None:
