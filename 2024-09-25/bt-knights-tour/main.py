@@ -18,6 +18,7 @@ def bt_kt(n, s, r=None, c=None):
                     return True
                 else:
                     s[r][c] = ' '
+        print("HAVE TO BACKTRACK!!!")
         return False
     else:
         for (dr, dc) in [(-1, +2), (-2, +1), (-2, -1), (-1, -2),
@@ -42,5 +43,4 @@ if __name__ == '__main__':
         print("DONE!!!")
         pprint(s)
     else:
-        print("FAIL!!!")
-        
+        print("FAIL!!!")        
