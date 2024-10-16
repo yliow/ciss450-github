@@ -25,7 +25,19 @@ def terminal_value(s):
 
 
 def mm(s, player):
-    pass
+    """ return the action (or return value as well) """
+    if player == "MAX":
+        maximum = None
+        maximum_action = None
+        for action,state in successors(s):
+            action_value = mm(state, "MIN")
+            a, v = action_value
+            if maximum == None or v > maximum:
+                maximum = v
+                maximum_action = a
+        return (maximum_action, maximum)
+    else: # MIN
+        pass
 
 
 if __name__ == '__main__':
