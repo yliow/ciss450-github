@@ -9,7 +9,7 @@ def successors(s):
          "s4": [("a10", "s11"), ("a11", "s12"), ("a12", "s13")]}
     d1 = dict([("s%s" % _, []) for _ in range(5, 14)])
     d.update(d1)
-    return d[s]
+    return d.get(s, None)
 
 def terminal_value(s):
     d = {5:3,
@@ -23,9 +23,11 @@ def terminal_value(s):
          13:2}
     return d.get(int(s[1:]), None)
 
-def mm(s):
+
+def mm(s, player):
     pass
 
+
 if __name__ == '__main__':
-    print(successors("s1"))
+    ret = mm("s1", "MAX")
 
