@@ -23,21 +23,28 @@ def terminal_value(s):
          13:2}
     return d.get(int(s[1:]), None)
 
+def terminal_test(s):
+    return terminal_value(s) is not None
 
 def mm(s, player):
     """ return the action (or return value as well) """
-    if player == "MAX":
-        maximum = None
-        maximum_action = None
-        for action,state in successors(s):
-            action_value = mm(state, "MIN")
-            a, v = action_value
-            if maximum == None or v > maximum:
-                maximum = v
-                maximum_action = a
-        return (maximum_action, maximum)
-    else: # MIN
-        pass
+    if terminal_test(s):
+        return (None, terminal_value(s))
+    else:
+        if player == "MAX":
+            maximum = None
+            maximum_action = None
+            for action,state in successors(s):
+                action_value = mm(state, "MIN")
+                a, v = action_value
+                if a == None:
+                    a = action
+                if maximum == None or v > maximum:
+                    maximum = v
+                    maximum_action = a
+            return (maximum_action, maximum)
+        else: # MIN
+            pass
 
 
 if __name__ == '__main__':
