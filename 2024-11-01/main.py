@@ -27,6 +27,9 @@ def isdiag(p0, p1):
     dc = c0 - c1
     return dr == dc or dr == -dc
 
+def isattacking(p0, p1):
+    return isdiag(p0, p1) or p0[1] == p1[1]
+
 def h(m):
     n = len(m)
     points = []
@@ -39,7 +42,7 @@ def h(m):
         for j in range(i + 1, n):
             p0 = points[i]
             p1 = points[j]
-            print((i, j), p0, p1, isdiag(p0, p1))
+            print((i, j), p0, p1, isattacking(p0, p1))
 
 if __name__ == '__main__':
     m = rand_state(n)
