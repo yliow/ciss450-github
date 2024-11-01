@@ -37,14 +37,56 @@ def h(m):
         for c, v in enumerate(row):
             if m[r][c] == 'Q':
                 points.append((r, c))
-    print(points)
+    #print(points)
+    s = 0
     for i in range(0, n - 1):
         for j in range(i + 1, n):
             p0 = points[i]
             p1 = points[j]
-            print((i, j), p0, p1, isattacking(p0, p1))
+            s += int(isattacking(p0, p1))
+            #print((i, j), p0, p1, isattacking(p0, p1), s)
+    return s
+
+def actions(m):
+    '''
+    return [((r, c), +1), ((r, c), -1),....]
+    '''
+    n = len(m)
+    ret = []
+    for r, row in enumerate(m):
+        for c, v in enumerate(row):
+            if v == 'Q':
+                point = (r, c)
+                if c < n - 1:
+                    ret.append((point, +1))
+                if c > 0:
+                    ret.append((point, -1))
+                break
+    return ret
+
+import copy
+
+def solve():
+    """ solve using SA """
+
+    m = rand_state(n)
+    obj = h(m)
+    printboard(m)
+    print(obj)
+    
+    while 1:
+        as = actions(m)
+        action = random.choice(as)
+        (r, c), dc = action
+        m0 = copy.deepcopy(m)
+        m0[r][c] = ' '
+        m0[r][c + dc] = 'Q'
+        obj0 = h(m0)
+        printboard(m0)
+        print(obj0)
+        break
+        
+    return m
 
 if __name__ == '__main__':
-    m = rand_state(n)
-    printboard(m)
-    h(m)
+     m = solve()
