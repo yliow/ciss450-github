@@ -75,8 +75,9 @@ def solve():
     print(obj)
     
     while 1:
-        as = actions(m)
-        action = random.choice(as)
+        as_ = actions(m)
+        action = random.choice(as_)
+        print("action:", action)
         (r, c), dc = action
         m0 = copy.deepcopy(m)
         m0[r][c] = ' '
