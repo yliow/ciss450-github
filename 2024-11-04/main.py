@@ -70,12 +70,10 @@ def solve():
     """ solve using SA """
 
     m = rand_state(n)
-    obj = h(m)
+    best_h = h(m)
+    best_options = [m] # (a, b) = (action, state)
     printboard(m)
     print(obj)
-
-    best_h = obj
-    best_options = [m] # (a, b) = (action, state)
 
     # hc ... go over all succ and pick the best
 
@@ -103,7 +101,8 @@ def solve():
             m = random.choice(best_options)
             printboard(m)
             print(best_h)
-            
+
+        input("? ")
         '''
         action = random.choice(as_)
         print("action:", action)
