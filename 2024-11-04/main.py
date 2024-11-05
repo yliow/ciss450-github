@@ -1,6 +1,6 @@
 import random; random.seed()
 
-n = 5
+n = 16
 
 def empty(n):
     return [[' ' for _ in range(n)] for _ in range(n)]
@@ -71,14 +71,19 @@ def solve():
 
     m = rand_state(n)
     best_h = h(m)
-    best_options = [m] # (a, b) = (action, state)
+    #best_options = [m] # (a, b) = (action, state)
     printboard(m)
-    print(obj)
+    print(best_h)
+    #input("? ")
 
     # hc ... go over all succ and pick the best
 
+    t = 0
+    a = 1.0
+    max_t = 1000
     while 1:
-        
+
+        """ hc hill climbing
         improve = False
         for action in actions(m):
             (r, c), dc = action
@@ -101,9 +106,40 @@ def solve():
             m = random.choice(best_options)
             printboard(m)
             print(best_h)
+        """
 
+        # simulated annealing
+        actions_ = actions(m)
+        if len(actions_) == 0:
+            break
+        action = random.choice(actions_)
+        m0 = action
+        (r, c), dc = action
+        m0 = copy.deepcopy(m)
+        m0[r][c] = ' '
+        m0[r][c + dc] = 'Q'
+        obj0 = h(m0)
+
+        # now we have m,best_h and m0,obj0
+        if obj0 < best_h:
+            m = m0
+            best_h = obj0
+        else:
+            x = random.uniform(0.0, 1.0)
+            if x < a:
+                m = m0
+                best_h = obj0
+
+        printboard(m)
+        print(best_h)
+        
         input("? ")
+        t += 1
+        if t >= max_t: break
+        a = a / t
+        
         '''
+        # TEST
         action = random.choice(as_)
         print("action:", action)
         (r, c), dc = action
