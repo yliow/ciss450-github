@@ -35,14 +35,26 @@ csp = CSP(vars=[X, Y, Z],
           domains={X:[r, g, b],
                    Y:[r, g, b],
                    Z:[r, g, b]},
-          constraints = ["X != Y", "X != Z"])
+          constraints = {("X", "Y"): "X != Y",
+                         ("X", "Z"): "X != Z"}
+)
 assignment = [(X, r)]
 
 vars2 = [_ for _ in csp.vars if _ != assignment[0][0]]
 print("vars2:", vars2)
-asd
 
-domains2 = None
+domains2 = {}
+var0 = assignment[0][0]
+for var1 in vars2:
+    print("(var0, var1):", (var0, var1))
+    if (var0, var1) in csp.constraints.keys():
+        c = csp.constraints[(var0, var1))
+        print("c:", c)
+        #domains2[var1] = {}
+        
+print("domains2:", domains2)
+
+asd
 constraints2 = None
 csp2 = CSP(vars = vars2,
            domains = domains2,
