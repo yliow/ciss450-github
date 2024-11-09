@@ -45,12 +45,22 @@ print("vars2:", vars2)
 
 domains2 = {}
 var0 = assignment[0][0]
+val0 = assignment[0][1]
 for var1 in vars2:
     print("(var0, var1):", (var0, var1))
     if (var0, var1) in csp.constraints.keys():
-        c = csp.constraints[(var0, var1))
+        c = csp.constraints[(var0, var1)]
         print("c:", c)
-        #domains2[var1] = {}
+        c = c.replace(var0, '"%s"' % val0)
+        print("c:", c)
+        D = []
+        for v in csp.domains[var1]:
+            c1 = c.replace(var1, '"%s"' % v)
+            print("c1:", c1)
+            if eval(c1):
+                D.append(v)
+                print("D:", D)
+        domains2[var1] = D
         
 print("domains2:", domains2)
 
