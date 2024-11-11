@@ -58,16 +58,22 @@ csp = CSP(vars=[X, Y, Z, W],
 assignment = [(X, r)]
 var = assignment[0][0]
 val = assignment[0][1]
-
+print("var, val:", var, val)
 # compute new vars
 vars2 = [_ for _ in csp.vars if _ != assignment[0][0]]
 print("vars2:", vars2)
 
 # compute new constraints
+print("csp.constraints:", csp.constraints)
 constraints2 = {}
-for k,v in csp.constaints:
+for k,v in csp.constraints.items():
     print("k, v:", k, v)
-
+    if var in k:
+        v = v.replace(var, '"%s"' % str(val))
+        k = tuple(_ for _ in k if _ != var)
+        print("case 0 ... k, v:", k, v)
+    constraints2[k] = v
+    print(constraints2)
 asd
     
 
