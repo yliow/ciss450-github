@@ -67,25 +67,28 @@ print("vars2:", vars2)
 print("csp.constraints:", csp.constraints)
 constraints2 = {}
 for k,v in csp.constraints.items():
-    print("k, v:", k, v)
+    #print("k, v:", k, v)
     if var in k:
         v = v.replace(var, '"%s"' % str(val))
         k = tuple(_ for _ in k if _ != var)
-        print("case 0 ... k, v:", k, v)
+        #print("case 0 ... k, v:", k, v)
     constraints2[k] = v
-    print(constraints2)
-asd
+print("constraints2:", constraints2)
     
-
+# compute new domains
 domains2 = {}
-var0 = assignment[0][0]
-val0 = assignment[0][1]
-for var1 in vars2:
-    print("(var0, var1):", (var0, var1))
-    if (var0, var1) in csp.constraints.keys():
-        c = csp.constraints[(var0, var1)]
+for c in constraints2:
+    if len(c) == 1:
         print("c:", c)
-        c = c.replace(var0, '"%s"' % val0)
+asd
+
+'''
+for var1 in vars2:
+    print("(var, var1):", (var, var1))
+    if (var, var1) in csp.constraints.keys():
+        c = csp.constraints[(var, var1)]
+        print("c:", c)
+        c = c.replace(var, '"%s"' % val)
         print("c:", c)
         D = []
         for v in csp.domains[var1]:
@@ -95,7 +98,7 @@ for var1 in vars2:
                 D.append(v)
                 print("D:", D)
         domains2[var1] = D
-        
+'''
 print("domains2:", domains2)
 
 asd
