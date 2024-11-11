@@ -56,6 +56,8 @@ csp = CSP(vars=[X, Y, Z, W],
 
 # assume BT selects X = r ...
 assignment = [(X, r)]
+var = assignment[0][0]
+val = assignment[0][1]
 
 # compute new vars
 vars2 = [_ for _ in csp.vars if _ != assignment[0][0]]
@@ -64,7 +66,9 @@ print("vars2:", vars2)
 # compute new constraints
 constraints2 = {}
 for k,v in csp.constaints:
-    
+    print("k, v:", k, v)
+
+asd
     
 
 domains2 = {}
