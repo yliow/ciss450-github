@@ -76,10 +76,15 @@ print("*** constraints2:", constraints2)
     
 # compute new domains
 domains2 = {}
-for k,v in constraints2.items():
+for k, prop in constraints2.items():
     if len(k) == 1: # i.e. constraint c has ONE var
-        print("k, v:", k, v)
-        domains2[k] = 
+        print("k, prop:", k, prop)
+        domains2[k[0]] = []
+        for x in csp.domains[k[0]]:
+            prop0 = prop.replace(k[0], '"%s"' % x)
+            if eval(prop0) == True:
+                domains2[k[0]].append(x)
+print(domains2)
 asd
 
 '''
