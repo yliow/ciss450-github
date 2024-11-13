@@ -75,6 +75,9 @@ for k,v in csp.constraints.items():
     constraints2[k] = v
     
 # compute new domains
+def myeval(prop="X != Y", assignment=[("X", "r"), ("Y", 'g')):
+    return None
+
 domains2 = {}
 for k, prop in constraints2.items():
     if len(k) == 1: # i.e. constraint c has ONE var
@@ -85,6 +88,8 @@ for k, prop in constraints2.items():
                 domains2[k[0]].append(x)
     else: # non-unary propositions
         None
+constraints2 = dict((k,v) for (k,v) in constraints2.items() if len(k) != 1)
+        
 for v in vars2:
     if v not in domains2:
         domains2[v] = csp.domains[v]
