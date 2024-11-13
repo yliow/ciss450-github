@@ -25,7 +25,13 @@ class CSP:
         self.vars = vars
         self.domains = domains
         self.constraints = constraints
-
+    def __str__(self):
+        return """<CSP
+vars       : %s
+domains    : %s
+constraints: %s
+>""" % (self.vars, self.domains, self.constraints)
+    
 ''' use graph coloring problem
 X -- Y -- W
 |   /
@@ -57,34 +63,37 @@ csp = CSP(vars=[X, Y, Z, W],
 assignment = [(X, r)]
 var = assignment[0][0]
 val = assignment[0][1]
-print("var, val:", var, val)
 # compute new vars
 vars2 = [_ for _ in csp.vars if _ != assignment[0][0]]
-print("vars2:", vars2)
 
 # compute new constraints
-print("csp.constraints:", csp.constraints)
 constraints2 = {}
 for k,v in csp.constraints.items():
-    #print("k, v:", k, v)
     if var in k:
         v = v.replace(var, '"%s"' % str(val))
         k = tuple(_ for _ in k if _ != var)
-        #print("case 0 ... k, v:", k, v)
     constraints2[k] = v
-print("*** constraints2:", constraints2)
     
 # compute new domains
 domains2 = {}
 for k, prop in constraints2.items():
     if len(k) == 1: # i.e. constraint c has ONE var
-        print("k, prop:", k, prop)
         domains2[k[0]] = []
         for x in csp.domains[k[0]]:
             prop0 = prop.replace(k[0], '"%s"' % x)
             if eval(prop0) == True:
                 domains2[k[0]].append(x)
-print(domains2)
+    else: # non-unary propositions
+        None
+for v in vars2:
+    if v not in domains2:
+        domains2[v] = csp.domains[v]
+
+csp2 = CSP(vars=vars2, domains=domains2, constraints=constraints2)
+
+print("csp:", csp)
+print("csp2:", csp2)
+
 asd
 
 '''
