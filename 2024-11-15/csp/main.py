@@ -1,0 +1,101 @@
+"""
+CSP
+variables X1, X2, X3, ...
+domains D1, D2, D3, ...
+constraints C1, C2, C3, ...
+
+logic
+X = VAR("X")
+Y = VAR("Y")
+Z = VAR("Z")
+P = AND(X, Y)
+Q = AND(X, NOT(Z))
+R = OR(P, Q)
+S = SUBST(R, (X, True))
+"""
+
+class CSP:
+    def __init__(self,
+                 vars,    # example: ["X1", "X2, "X3"]
+                 domains, # example: {"X1":['r', 'g', 'b'],
+                          #           "X2":['r', 'g', 'b'],
+                          #           "X3":['r', 'g', 'b']}
+                 constraints, # example: ["X1 != X2", "X1 != X3"]
+    ):
+        self.vars = vars
+        self.domains = domains
+        self.constraints = constraints
+    def __str__(self):
+        return """<CSP
+vars       : %s
+domains    : %s
+constraints: %s
+>""" % (self.vars, self.domains, self.constraints)
+    
+''' use graph coloring problem
+X -- Y -- W
+|   /
+|  /
+| /
+|/
+Z
+'''
+X = 'X'
+Y = 'Y'
+Z = 'Z'
+W = 'W'
+r = 'r'
+g = 'g'
+b = 'b'
+
+csp = CSP(vars=[X, Y, Z, W],
+          domains={X:[r, g, b],
+                   Y:[r, g, b],
+                   Z:[r, g, b],
+                   W:[r, g, b]},
+          constraints = {(X, Y): "X != Y",
+                         (X, Z): "X != Z",
+                         (Y, Z): "Y != Z",
+                         (W, Y): "W != Y"}
+)
+
+# assume BT selects X = r ...
+assignment = [(X, r)]
+var = assignment[0][0]
+val = assignment[0][1]
+# compute new vars
+vars2 = [_ for _ in csp.vars if _ != assignment[0][0]]
+
+# compute new constraints
+constraints2 = {}
+for k,v in csp.constraints.items():
+    if var in k:
+        v = v.replace(var, '"%s"' % str(val))
+        k = tuple(_ for _ in k if _ != var)
+    constraints2[k] = v
+    
+# compute new domains
+#def myeval(prop="X != Y", assignment=[("X", "r"), ("Y", 'g')):
+#    return None
+
+domains2 = {}
+for k, prop in constraints2.items():
+    if len(k) == 1: # i.e. constraint c has ONE var
+        domains2[k[0]] = []
+        for x in csp.domains[k[0]]:
+            prop0 = prop.replace(k[0], '"%s"' % x)
+            if eval(prop0) == True:
+                domains2[k[0]].append(x)
+    else: # non-unary propositions
+        None
+constraints2 = dict((k,v) for (k,v) in constraints2.items() if len(k) != 1)
+        
+for v in vars2:
+    if v not in domains2:
+        domains2[v] = csp.domains[v]
+
+csp2 = CSP(vars=vars2, domains=domains2, constraints=constraints2)
+
+print("csp:", csp)
+print("csp2:", csp2)
+
