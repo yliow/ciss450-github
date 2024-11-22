@@ -18,6 +18,15 @@ print(e2) ------> "Y" (in dm225: X and TRUE = X, TRUE & TRUE = TRUE)
 
 Only propositional logic.
 No predicate logic.
+
+Sentence -> AtomicSentence | CompoundSentence
+AtomicSentence -> Constant | PropVar
+CompoundSentence -> Sentence & Sentence
+                  | Sentence | Sentence
+                  | ~ Sentence
+                  | Sentence -> Sentence
+                  | Setencee <- Sentence
+                  | Sentence <-> Sentence
 """
 
 class Atomic:
@@ -63,7 +72,9 @@ def SUBST(e, assignment):
     = SUBST(AND(X, Y), X=TRUE)
     = AND(SUBST(X, X=TRUE), SUBST(Y, X=TRUE))
     """
-    if isinstance(e, PropVar):
+    if isinstance(e, Constant):
+        return e
+    elif isinstance(e, PropVar):
         for var, val in assignment:
             if e.name == var.name: # <-- WARNING: 
                 return val
