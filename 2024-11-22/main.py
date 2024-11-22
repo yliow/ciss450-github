@@ -20,18 +20,26 @@ Only propositional logic.
 No predicate logic.
 """
 
-TRUE = 1
-FALSE = 0
+class Atomic:
+    def __init__(self, name):
+        self.name = name
+    def __str__(self):
+        return self.name
 
-class PropVar:
+class Constant(Atomic):
+    def __init__(self, name):
+        Atomic.__init__(self)
+
+TRUE = Constant("TRUE")
+FALSE = Constant("FALSE")
+
+class PropVar(Atomic):
     """
     Each propositional variable must be uniquely defined
     by their name.
     """
     def __init__(self, name='[NONE]'):
-        self.name = name
-    def __str__(self):
-        return self.name
+        Atomic.__init__(self, name)
 
 class AND:
     def __init__(self, X, Y):
@@ -59,6 +67,7 @@ def SUBST(e, assignment):
         for var, val in assignment:
             if e.name == var.name: # <-- WARNING: 
                 return val
+        return e
     elif isinstance(e, AND):
         left = SUBST(e.left, assignment)
         right = SUBST(e.right, assignment)
@@ -67,7 +76,16 @@ def SUBST(e, assignment):
         left = SUBST(e.left, assignment)
         right = SUBST(e.right, assignment)
         return OR(left, right)
-    
+
+def SIMPLIFY(e):
+    if isinstance(e, Atomic):
+        return e
+    elif isinstance(e, AND):
+        left = e.left
+        right = e.right
+        #if left.name == 
+    return None
+
 if __name__ == '__main__':
     X = PropVar("X")
     Y = PropVar("Y")
@@ -81,3 +99,9 @@ if __name__ == '__main__':
     print(g)
     e1 = SUBST(e, [(X, TRUE)])
     print("e1:", e1)
+    f1 = SUBST(f, [(X, TRUE)])
+    print("f1:", f1)
+    g1 = SUBST(g, [(X, TRUE)])
+    print("g1:", g1)
+    e2 = SIMPLIFY(e1)
+    print(e2)
