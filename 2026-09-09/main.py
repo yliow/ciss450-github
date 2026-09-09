@@ -19,6 +19,9 @@ print(c.b)
 
 
 def get_inc(diff):
+    """
+    diff is bound to the scope of f
+    """
     def f(x):
         return x + diff
     return f
