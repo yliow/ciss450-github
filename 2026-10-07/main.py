@@ -58,8 +58,24 @@ def h(s):
     c1 - c0 == -(r[c1] - r[c0])
     '''
 
-            
+def actions(s):
+    """
+    An action is (r,c) to place a queen.
+    """
+    n = len(s)
+    ret = []
+    for c in range(n):
+        for r in range(n):
+            if s[r][c] = '':
+                ret.append((r,c))
+    return ret
+
+def result(s, a):
+    pass
+
 if __name__ == '__main__':
-    s = random_state(n)
+    s = rand_state(n)
     print(tostring(s))
-    
+    print(h(s))
+    actions_ = actions(s)
+    print(actions_)
