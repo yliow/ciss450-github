@@ -8,7 +8,6 @@ n = int(input("n: "))
 
 def tostring(s):
     n = len(s)
-    line = '+' + (n * '-+')
     ret = []
     def f(_):
         if _ == '': return '.'
