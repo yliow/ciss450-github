@@ -66,16 +66,39 @@ def actions(s):
     ret = []
     for c in range(n):
         for r in range(n):
-            if s[r][c] = '':
+            if s[r][c] == '':
                 ret.append((r,c))
     return ret
 
 def result(s, a):
-    pass
+    ret = [r[:] for r in s]
+    (r, c) = a
+    for row in range(n):
+        ret[row][c] = ''
+    ret[r][c] = 'Q'
+    return ret
 
+def hc(n):
+    s = rand_state(n)
+    h_ = h(s)
+    while 1:
+        actions_ = actions(s)
+        for action in actions_:
+            s1 = result(s, action)
+            h1 = h(s1)
+            if h1 < h_:
+                s = s1
+                h_ = h1
+                
 if __name__ == '__main__':
     s = rand_state(n)
     print(tostring(s))
     print(h(s))
     actions_ = actions(s)
-    print(actions_)
+
+    print('test result')
+    action = actions_[0]
+    s1 = result(s, action)
+    print(action)
+    print(tostring(s1))
+    
