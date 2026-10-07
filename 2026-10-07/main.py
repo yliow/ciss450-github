@@ -29,9 +29,6 @@ def rand_state(n):
     #print(tostring(ret))
     return ret
 
-s = rand_state(4)
-print(tostring(s))
-asd
 
 def h(s):
     n = len(s)
@@ -65,5 +62,4 @@ def h(s):
 if __name__ == '__main__':
     s = random_state(n)
     print(tostring(s))
-    #h(s)
-    hc(n)
+    
