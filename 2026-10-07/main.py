@@ -21,14 +21,16 @@ def tostring(s):
 
 def rand_state(n):
     ret = [['' for c in range(n)] for r in range(n)]
-    print(tostring(ret))
+    #print(tostring(ret))
     for c in range(n):
         r = random.randrange(0, n)
         ret[r][c] = 'Q'
-    print()
-    print(tostring(ret))
-        
-rand_state(4)
+    #print()
+    #print(tostring(ret))
+    return ret
+
+s = rand_state(4)
+print(tostring(s))
 asd
 
 def h(s):
