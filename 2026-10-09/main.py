@@ -78,27 +78,50 @@ def result(s, a):
     ret[r][c] = 'Q'
     return ret
 
-def hc(n):
-    s = rand_state(n)
-    h_ = h(s)
+def fchc(n):
+    s0 = rand_state(n)
+    h0 = h(s0)
+    #print(tostring(s0))
+    #print(h0)
     while 1:
-        actions_ = actions(s)
-        for action in actions_:
-            s1 = result(s, action)
+        found = False # as in found a better state in the loop
+        for a0 in actions(s0):
+            s1 = result(s0, a0)
             h1 = h(s1)
-            if h1 < h_:
-                s = s1
-                h_ = h1
-                
-if __name__ == '__main__':
-    s = rand_state(n)
-    print(tostring(s))
-    print(h(s))
-    actions_ = actions(s)
+            if h1 < h0:
+                found = True
+                s0 = s1
+                h0 = h1
+                #print()
+                #print("a0:", a0)
+                #print(tostring(s0))
+                #print(h0)
+        if not found:
+            break
+    return s0, h0
 
-    print('test result')
-    action = actions_[0]
-    s1 = result(s, action)
-    print(action)
-    print(tostring(s1))
+def rrhc(n):
+    num = 0
+    best = None
+    while 1:
+        num += 1
+        s0, h0 = fchc(n)
+        if best == None or h0 < best:
+            best = h0
+            #print(">>>>>>>>>>> next best:", best)
+        if h0 == 0:
+            #print("num:", num)
+            return s0, h0, num
+
+if __name__ == '__main__':
+    #s0 = rand_state
+    #s = rand_state(n)
+    #print(tostring(s))
+    #print(h(s))
+    #fchc(n)
+    s0, h0, num = rrhc(n)
+    print(tostring(s0))
+    print(h0)
+    print("num:", num)
+
     
