@@ -8,6 +8,7 @@ def tostring(board):
         ret += line
     return ret
 
+'''
 def bt(board):
     n = len(board)
     m, mr, mc = None, None, None
@@ -38,13 +39,13 @@ def bt(board):
                 return True
             board[r][c] = ' '
         return False
-            
+'''            
                     
 if __name__ == '__main__':
     n = int(input("n? "))
     board = [[' ' for _ in range(n)] for _ in range(n)]
     board[0][0] = '0'
     board[1][2] = '1'
-    print(board)
+    #print(board)
     print(tostring(board))
     
