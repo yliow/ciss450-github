@@ -21,7 +21,8 @@ def bt(board):
                 else:
                     if i > m:
                         m, mr, mc = i, r, c
-    print("m,mr,mc:", m, mr, mc)
+    #print("m,mr,mc:", m, mr, mc)
+    print("m:", m)
     if m == n * n - 1:
         # base case
         return True
@@ -52,7 +53,7 @@ def bt(board):
 if __name__ == '__main__':
     n = int(input("n? "))
     board = [[' ' for _ in range(n)] for _ in range(n)]
-    print(tostring(board))
+    #print(tostring(board))
     flag = bt(board)
     if flag:
         print("SUCCESS")
