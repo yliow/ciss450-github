@@ -22,7 +22,7 @@ def bt(board):
                     if i > m:
                         m, mr, mc = i, r, c
     #print("m,mr,mc:", m, mr, mc)
-    print("m:", m)
+    #print("m:", m)
     if m == n * n - 1:
         # base case
         return True
