@@ -1,3 +1,5 @@
+from PropFormula import *
+
 """
 CSP
 1. graph coloring
@@ -84,9 +86,9 @@ Doms[B] = {0, 1}
 Doms[C] = {0, 1}
 Doms[D] = {0, 1}
 Cons = {}
-Cons[(A, C)] = "A != C"
-Cons[(B, C)] = "B != C"
-Cons[(C, D)] = "C != D"
+Cons[(A, C)] = PropFormula("A != C")
+Cons[(B, C)] = PropFormula("B != C")
+Cons[(C, D)] = PropFormula("C != D")
 CSP0 = CSP(Vars=Vars,
            Doms=Doms,
            Cons=Cons)
