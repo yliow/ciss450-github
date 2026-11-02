@@ -30,10 +30,14 @@ class CSP:
         self.Doms = Doms
         self.Cons = Cons
     def __str__(self):
+        s = ""
+        for k, v in self.Cons.items():
+            s += '          %s: %s\n' % (k, v)
         return '''<CSP
-%s
-%s
-%s>''' % (self.Vars, self.Doms, self.Cons)
+    Vars: %s
+    Doms: %s
+    Cons:
+%s>''' % (self.Vars, self.Doms, s)
     
 '''
                (A)
@@ -79,6 +83,7 @@ def bt(csp, assignments):
     '''
 
 A, B, C, D = 'A', 'B', 'C', 'D'
+
 Vars = [A, B, C, D]
 Doms = {}
 Doms[A] = {0, 1}
@@ -89,8 +94,39 @@ Cons = {}
 Cons[(A, C)] = PropFormula("A != C")
 Cons[(B, C)] = PropFormula("B != C")
 Cons[(C, D)] = PropFormula("C != D")
-CSP0 = CSP(Vars=Vars,
-           Doms=Doms,
-           Cons=Cons)
-print(CSP0)
+csp = CSP(Vars, Doms, Cons)
+assignment = []
+
+var = 'A'
+val = 0
+Vars = csp.Vars[:]
+Vars.remove(var)
+print("Vars:", Vars)
+import copy
+Doms = copy.deepcopy(csp.Doms)
+del Doms[var]
+print("Doms:", Doms)
+
+Cons = copy.deepcopy(csp.Cons)
+d = {}
+for k in Cons:
+    if var in k:
+        P = Cons[k]             # P = A != C
+        P = P.subst(var, val) # P = 0 != C
+        xs = list(k)
+        xs.remove(var)
+        xs = tuple(xs)
+        d[xs] = P
+    else:
+        d[k] = Cons[k]
+Cons = d
+
+for k,v in Cons.items():
+    print(k, v)
+
+#csp1 = CSP(Vars, Doms, Cons)
+#CSP0 = CSP(Vars=Vars,
+#           Doms=Doms,
+#           Cons=Cons)
+#print(CSP0)
 
