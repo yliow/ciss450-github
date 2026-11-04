@@ -124,6 +124,26 @@ Cons = d
 for k,v in Cons.items():
     print(k, v)
 
+newCons = {}
+for k in Cons:
+    print("k:", k)
+    if len(k) == 1:
+        print("len = 1")
+        var = k[0] # i.e. var is "C"
+        print("var:", var, type(var))
+        newDom = []
+        for x in Doms[var]:
+            print("x:", x)
+            P = Cons[k]
+            print("P:", P)
+            Q = P.subst(k[0], x)
+            print("Q:", Q)
+            if Q.eval():
+                print("Q is true")
+                newDom.append(x)
+                print("newDom:", newDom)
+        Doms[var] = newDom
+
 #csp1 = CSP(Vars, Doms, Cons)
 #CSP0 = CSP(Vars=Vars,
 #           Doms=Doms,
