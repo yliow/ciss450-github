@@ -42,7 +42,8 @@ class Threshold(Activation):
         self.alpha = alpha
     def __call__(self, z):
         if z < self.alpha: return 0.0
-        else: return 1.0
+        elif z > self.alpha: return 1.0
+        else: return None # avoid the midpoint
     def __str__(self):
         return "Threshold(alpha=%s)" % self.alpha
     
@@ -85,4 +86,3 @@ if __name__ == '__main__':
                 n += 1
                 if n == 1:
                     import sys; sys.exit()
-        
