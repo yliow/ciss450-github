@@ -46,7 +46,16 @@ class Threshold(Activation):
         else: return None # avoid the midpoint
     def __str__(self):
         return "Threshold(alpha=%s)" % self.alpha
-    
+
+#def NeuralLayer:
+#    def __init__(self, Ns):
+#        self.Ns = Ns
+#    def __call__(self, xs):
+#        xs = [1] + xs
+#        outputs = [N(xs) for N in self.Ns]
+#        return outputs
+
+
 if __name__ == '__main__':
     S = Sigmoid()
     print(S)
@@ -62,27 +71,75 @@ if __name__ == '__main__':
     xs = [0, 0]
     print("N(xs):", N(xs))
 
-
     def weights(n=10):
-        return [float(_) / n for _ in list(range(0, n))] + [1.0]
+        return [float(_) / n for _ in [(x - n) for x in list(range(0, 2 * n))]] + [1.0]
 
-    n = 0
+    def brute_force_training(N, training):
+        num_weights = len(N.ws) 
+        for w0 in weights():
+            for w1 in weights():
+                for w2 in weights():
+                    ws = [w0, w1, w2]
+                    print(ws)
+                    N.ws = ws
+                    found = True
+                    for t in training:
+                        inputs, correct = t
+                        output = N(inputs)
+                        print(inputs, output, correct, output == correct)
+                        if output != correct:
+                            found = False
+                            break
+                    if found: break
+                if found: break
+            if found: break
+        if found:
+            return N
+        else:
+            print("ERROR: NOT FOUND")
+            return None
+
     # OR GATE
     training = [([0,0],0),
                 ([0,1],1),
                 ([1,0],1),
                 ([1,1],1),
                 ]
-    for w0 in weights():
-        for w1 in weights():
-            for w2 in weights():
-                ws = [w0, w1, w2]
-                print(ws)
-                N.ws = ws
-                for t in training:
-                    inputs, correct = t
-                    output = N(inputs)
-                    print(inputs, output, correct, output == correct)
-                n += 1
-                if n == 1:
-                    import sys; sys.exit()
+    N = Neuron(activation=T, n=2)
+    N = brute_force_training(N, training)
+    print("our OR gate as neuron:", N)
+    N_OR = N # keep or gate
+
+    # AND GATE
+    training = [([0,0],0),
+                ([0,1],0),
+                ([1,0],0),
+                ([1,1],1),
+                ]
+    N = Neuron(activation=T, n=2)
+    N = brute_force_training(N, training)
+    print("our AND gate as neuron:", N)
+    N_AND = N # keep or gate
+
+    # GATE for ~x1 AND x2
+    training = [([0,0],0),
+                ([0,1],1),
+                ([1,0],0),
+                ([1,1],0),
+                ]
+    N = Neuron(activation=T, n=2)
+    N = brute_force_training(N, training)
+    print("Gate(x1, x2) = ~x1 * x2 as neuron:", N)
+    N1 = N # keep our gate
+
+    # GATE for x1 AND ~x2
+    training = [([0,0],0),
+                ([0,1],0),
+                ([1,0],1),
+                ([1,1],0),
+                ]
+    N = Neuron(activation=T, n=2)
+    N = brute_force_training(N, training)
+    print("Gate(x1, x2) = x1 * ~x2 as neuron:", N)
+    N2 = N # keep our gate
+
